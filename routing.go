@@ -507,6 +507,7 @@ func (dht *IpfsDHT) FindProvidersAsync(ctx context.Context, key cid.Cid, count i
 
 	keyMH := key.Hash()
 
+	fmt.Println("finding providers", "cid", key, "mh", internal.LoggableProviderRecordBytes(keyMH))
 	logger.Debugw("finding providers", "cid", key, "mh", internal.LoggableProviderRecordBytes(keyMH))
 	go dht.findProvidersAsyncRoutine(ctx, keyMH, count, peerOut)
 	return peerOut
@@ -548,6 +549,7 @@ func (dht *IpfsDHT) findProvidersAsyncRoutine(ctx context.Context, key multihash
 		if psTryAdd(p) {
 			select {
 			case peerOut <- p:
+				fmt.Println("Found provider ", p.ID)
 				span.AddEvent("found provider", trace.WithAttributes(
 					attribute.Stringer("peer", p.ID),
 					attribute.Stringer("from", dht.self),
