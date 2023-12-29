@@ -1068,6 +1068,7 @@ func (dht *FullRT) bulkMessageSend(ctx context.Context, keys []peer.ID, fn func(
 				peerAddrs := dht.peerAddrs[p]
 				dht.peerAddrsLk.RUnlock()
 				dialCtx, dialCancel := context.WithTimeout(ctx, dht.timeoutPerOp)
+				fmt.Println("Bulk message send ", p)
 				if err := dht.h.Connect(dialCtx, peer.AddrInfo{ID: p, Addrs: peerAddrs}); err != nil {
 					dialCancel()
 					atomic.AddInt64(&numSkipped, 1)

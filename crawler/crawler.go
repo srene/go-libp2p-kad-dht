@@ -2,6 +2,7 @@ package crawler
 
 import (
 	"context"
+	"fmt"
 	"sync"
 	"time"
 
@@ -232,6 +233,7 @@ func (c *DefaultCrawler) queryPeer(ctx context.Context, nextPeer peer.ID) *query
 
 	connCtx, cancel := context.WithTimeout(ctx, c.connectTimeout)
 	defer cancel()
+	fmt.Println("Crawler connecting to peer ", nextPeer)
 	err = c.host.Connect(connCtx, peer.AddrInfo{ID: nextPeer})
 	if err != nil {
 		logger.Debugf("could not connect to peer %v: %v", nextPeer, err)

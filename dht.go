@@ -470,7 +470,7 @@ func (dht *IpfsDHT) runFixLowPeersLoop() {
 	dht.wg.Add(1)
 	go func() {
 		defer dht.wg.Done()
-		fmt.Println("running fixLowPeers")
+		fmt.Println("fixLowPeers")
 
 		dht.fixLowPeers()
 
