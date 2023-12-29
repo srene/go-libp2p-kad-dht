@@ -470,6 +470,7 @@ func (dht *IpfsDHT) runFixLowPeersLoop() {
 	dht.wg.Add(1)
 	go func() {
 		defer dht.wg.Done()
+		fmt.Println("running fixLowPeers")
 
 		dht.fixLowPeers()
 
@@ -515,6 +516,7 @@ func (dht *IpfsDHT) fixLowPeers() {
 		found := 0
 		for _, i := range rand.Perm(len(bootstrapPeers)) {
 			ai := bootstrapPeers[i]
+			fmt.Println("fixLowPeers Connecting to ", ai)
 			err := dht.Host().Connect(dht.ctx, ai)
 			if err == nil {
 				found++
